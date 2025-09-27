@@ -1,18 +1,48 @@
 {% extends 'catalog/base.html' %}
 
-{% block title %}{{ product.name }} - QuickShop{% endblock %}
+{% block title %}{{ product.name }} - TechStore{% endblock %}
 
 {% block content %}
-<a href="{% url 'product_list' %}">← Назад к каталогу</a>
-<div style="display: flex; margin-top: 20px;">
-    <div style="flex: 1;">
-        <img src="{{ product.image.url }}" alt="{{ product.name }}" style="max-width: 100%;">
+<a href="{% url 'product_list' %}" style="display: inline-flex; align-items: center; color: #667eea; text-decoration: none; margin-bottom: 2rem;">
+    ← Назад к каталогу
+</a>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
+    <div>
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
     </div>
-    <div style="flex: 2; padding-left: 20px;">
-        <h2>{{ product.name }}</h2>
-        <p><strong>Цена: {{ product.price }} руб.</strong></p>
-        <p>Категория: {{ product.get_category_display }}</p>
-        <p>{{ product.description }}</p>
+
+    <div>
+        <span class="category-badge" style="font-size: 0.9rem;">{{ product.get_category_display }}</span>
+        <h1 style="font-size: 2.5rem; margin: 1rem 0; color: #2d3748;">{{ product.name }}</h1>
+        <div style="font-size: 2rem; font-weight: 700; color: #667eea; margin: 1.5rem 0;">{{ product.price }} ₽</div>
+
+        <div style="background: #f7fafc; padding: 1.5rem; border-radius: 8px; margin: 2rem 0;">
+            <h3 style="margin-bottom: 1rem; color: #2d3748;">Описание</h3>
+            <p style="line-height: 1.6; color: #4a5568;">{{ product.description }}</p>
+        </div>
+
+        <!-- Кнопка перехода на внешний сайт -->
+        <a href="https://vintend.com" target="_blank" class="buy-button" style="font-size: 1.1rem; padding: 15px 30px;">
+            🛒 Купить на Vintend
+        </a>
+
+        <div style="margin-top: 1rem; text-align: center;">
+            <small style="color: #718096;">Вы будете перенаправлены на официальный магазин</small>
+        </div>
+    </div>
+</div>
+
+<!-- Дополнительная информация -->
+<div style="margin-top: 3rem; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+    <h3 style="margin-bottom: 1rem; color: #2d3748;">Характеристики</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+        <div>
+            <strong>Категория:</strong> {{ product.get_category_display }}
+        </div>
+        <div>
+            <strong>Добавлен:</strong> {{ product.created_at|date:"d.m.Y" }}
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -1,18 +1,25 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
-<h2>Все товары</h2>
+<h2 class="section-title">Наши товары</h2>
+
 <div class="product-grid">
     {% for product in products %}
     <div class="product-card">
-        <a href="{% url 'product_detail' product.id %}">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-            <h3>{{ product.name }}</h3>
-            <p><strong>{{ product.price }} руб.</strong></p>
-        </a>
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+        <div class="product-info">
+            <span class="category-badge">{{ product.get_category_display }}</span>
+            <h3 class="product-name">{{ product.name }}</h3>
+            <p class="product-description">{{ product.description|truncatewords:20 }}</p>
+            <div class="product-price">{{ product.price }} ₽</div>
+            <a href="{% url 'product_detail' product.id %}" class="buy-button">Подробнее</a>
+        </div>
     </div>
     {% empty %}
-        <p>Товаров пока нет.</p>
+    <div style="text-align: center; grid-column: 1 / -1;">
+        <h3>Товары скоро появятся!</h3>
+        <p>Мы активно работаем над пополнением ассортимента</p>
+    </div>
     {% endfor %}
 </div>
 {% endblock %}

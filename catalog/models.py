@@ -20,9 +20,20 @@ class Product(models.Model):
     # Дата создания (автоматически проставляется при создании)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.name
+    def get_price_display(self):
+        """Возвращает цену в красивом формате"""
+        return f"{self.price} ₽"
+
+    def get_short_description(self):
+        """Короткое описание для карточек"""
+        return self.description[:100] + '...' if len(self.description) > 100 else self.description
 
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
+
+
+    def __str__(self):
+        return self.name
+
+
