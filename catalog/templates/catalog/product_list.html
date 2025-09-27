@@ -1,0 +1,18 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<h2>Все товары</h2>
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <a href="{% url 'product_detail' product.id %}">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            <h3>{{ product.name }}</h3>
+            <p><strong>{{ product.price }} руб.</strong></p>
+        </a>
+    </div>
+    {% empty %}
+        <p>Товаров пока нет.</p>
+    {% endfor %}
+</div>
+{% endblock %}
