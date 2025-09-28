@@ -1,25 +1,51 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
-<h2 class="section-title">Наши товары</h2>
+<section class="products-section" id="products">
+    <div class="section-title">
+        <h2>YOUR WAVE</h2>
+        <p>Gadgets that feel your rhythm and adapt to your lifestyle</p>
+    </div>
 
-<div class="product-grid">
-    {% for product in products %}
-    <div class="product-card">
-        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
-        <div class="product-info">
-            <span class="category-badge">{{ product.get_category_display }}</span>
-            <h3 class="product-name">{{ product.name }}</h3>
-            <p class="product-description">{{ product.description|truncatewords:20 }}</p>
-            <div class="product-price">{{ product.price }} ₽</div>
-            <a href="{% url 'product_detail' product.id %}" class="buy-button">Подробнее</a>
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-card">
+            {% if forloop.first %}
+            <div class="product-badge">TRENDING</div>
+            {% elif forloop.counter == 2 %}
+            <div class="product-badge">NEW WAVE</div>
+            {% endif %}
+
+            <div class="product-image-container">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+            </div>
+            <div class="product-info">
+                <div class="product-category">
+                    {% if product.category == 'POWERBANK' %}POWER{% else %}SOUND{% endif %}
+                </div>
+                <h3 class="product-name">{{ product.name }}</h3>
+                <p class="product-description">{{ product.description }}</p>
+
+                <div class="price-container">
+                    <div class="product-price-huf">{{ product.price }} HUF</div>
+                    <!-- EUR price will be added by JavaScript -->
+                </div>
+
+                <div class="product-actions">
+                    <a href="{% url 'product_detail' product.id %}" class="detail-button">DIVE IN</a>
+                    <a href="https://vintend.com" target="_blank" class="buy-button">
+                        <i class="fas fa-bolt"></i>
+                        GRAB
+                    </a>
+                </div>
+            </div>
         </div>
+        {% empty %}
+        <div style="text-align: center; grid-column: 1 / -1; padding: 4rem;">
+            <h3 style="color: var(--neon-blue); margin-bottom: 1rem;">Waves Coming Soon!</h3>
+            <p style="color: rgba(255,255,255,0.7);">We're riding new tech waves to bring you the freshest gadgets</p>
+        </div>
+        {% endfor %}
     </div>
-    {% empty %}
-    <div style="text-align: center; grid-column: 1 / -1;">
-        <h3>Товары скоро появятся!</h3>
-        <p>Мы активно работаем над пополнением ассортимента</p>
-    </div>
-    {% endfor %}
-</div>
+</section>
 {% endblock %}

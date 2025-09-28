@@ -1,48 +1,66 @@
 {% extends 'catalog/base.html' %}
 
-{% block title %}{{ product.name }} - TechStore{% endblock %}
+{% block title %}{{ product.name }} - WAVESTORE{% endblock %}
 
 {% block content %}
-<a href="{% url 'product_list' %}" style="display: inline-flex; align-items: center; color: #667eea; text-decoration: none; margin-bottom: 2rem;">
-    ← Назад к каталогу
-</a>
-
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;">
-    <div>
-        <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-    </div>
-
-    <div>
-        <span class="category-badge" style="font-size: 0.9rem;">{{ product.get_category_display }}</span>
-        <h1 style="font-size: 2.5rem; margin: 1rem 0; color: #2d3748;">{{ product.name }}</h1>
-        <div style="font-size: 2rem; font-weight: 700; color: #667eea; margin: 1.5rem 0;">{{ product.price }} ₽</div>
-
-        <div style="background: #f7fafc; padding: 1.5rem; border-radius: 8px; margin: 2rem 0;">
-            <h3 style="margin-bottom: 1rem; color: #2d3748;">Описание</h3>
-            <p style="line-height: 1.6; color: #4a5568;">{{ product.description }}</p>
-        </div>
-
-        <!-- Кнопка перехода на внешний сайт -->
-        <a href="https://vintend.com" target="_blank" class="buy-button" style="font-size: 1.1rem; padding: 15px 30px;">
-            🛒 Купить на Vintend
+<section class="products-section">
+    <div style="margin-bottom: 3rem;">
+        <a href="{% url 'product_list' %}" style="display: inline-flex; align-items: center; color: var(--neon-blue); text-decoration: none; margin-bottom: 2rem;">
+            <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i>
+            Back to Waves
         </a>
+    </div>
 
-        <div style="margin-top: 1rem; text-align: center;">
-            <small style="color: #718096;">Вы будете перенаправлены на официальный магазин</small>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;">
+        <div>
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width: 100%; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+        </div>
+
+        <div>
+            <div class="product-category" style="font-size: 1rem;">
+                {% if product.category == 'POWERBANK' %}POWER GADGET{% else %}SOUND GEAR{% endif %}
+            </div>
+            <h1 style="font-size: 2.8rem; margin: 1rem 0; color: var(--light); font-family: 'Rajdhani', sans-serif;">{{ product.name }}</h1>
+
+            <div class="price-container" style="margin: 2rem 0;">
+                <div class="product-price-huf" style="font-size: 2.5rem;">{{ product.price }} HUF</div>
+                <!-- EUR price will be added by JavaScript -->
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px; margin: 2.5rem 0; border: 1px solid rgba(255,255,255,0.1);">
+                <h3 style="margin-bottom: 1.5rem; color: var(--neon-blue); font-size: 1.3rem;">THE VIBE</h3>
+                <p style="line-height: 1.7; color: rgba(255,255,255,0.8); font-size: 1.1rem;">{{ product.description }}</p>
+            </div>
+
+            <!-- Buy Button -->
+            <a href="https://vintend.com" target="_blank" class="buy-button" style="font-size: 1.2rem; padding: 1.2rem 2.5rem; display: block; text-align: center;">
+                <i class="fas fa-external-link-alt"></i>
+                BUY ON VINTEND
+            </a>
+
+            <div style="margin-top: 1rem; text-align: center;">
+                <small style="color: rgba(255,255,255,0.5);">You'll be redirected to the official store</small>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Дополнительная информация -->
-<div style="margin-top: 3rem; background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-    <h3 style="margin-bottom: 1rem; color: #2d3748;">Характеристики</h3>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-        <div>
-            <strong>Категория:</strong> {{ product.get_category_display }}
-        </div>
-        <div>
-            <strong>Добавлен:</strong> {{ product.created_at|date:"d.m.Y" }}
+    <!-- Product Details -->
+    <div style="margin-top: 4rem; background: rgba(20,20,30,0.6); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
+        <h3 style="margin-bottom: 2rem; color: var(--neon-green); font-size: 1.5rem; text-align: center;">TECH SPECS</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+            <div style="text-align: center;">
+                <div style="color: var(--neon-blue); font-weight: 600; margin-bottom: 0.5rem;">CATEGORY</div>
+                <div style="color: rgba(255,255,255,0.8);">{{ product.get_category_display }}</div>
+            </div>
+            <div style="text-align: center;">
+                <div style="color: var(--neon-blue); font-weight: 600; margin-bottom: 0.5rem;">ADDED</div>
+                <div style="color: rgba(255,255,255,0.8);">{{ product.created_at|date:"M d, Y" }}</div>
+            </div>
+            <div style="text-align: center;">
+                <div style="color: var(--neon-blue); font-weight: 600; margin-bottom: 0.5rem;">AVAILABILITY</div>
+                <div style="color: var(--neon-green);">IN STOCK</div>
+            </div>
         </div>
     </div>
-</div>
+</section>
 {% endblock %}

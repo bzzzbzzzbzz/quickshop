@@ -24,6 +24,11 @@ class Product(models.Model):
         """Возвращает цену в красивом формате"""
         return f"{self.price} ₽"
 
+    def get_price_huf(self):
+        """Возвращает цену в формате HUF"""
+        return f"{self.price:,} HUF".replace(",", " ")
+
+
     def get_short_description(self):
         """Короткое описание для карточек"""
         return self.description[:100] + '...' if len(self.description) > 100 else self.description

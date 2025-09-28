@@ -6,3 +6,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'price', 'category', 'created_at') # Что показывать в списке
     list_filter = ('category', 'created_at') # Фильтры справа
     search_fields = ('name', 'description') # Поиск по названию и описанию
+
+    class Meta:
+        verbose_name = 'Product'
+        verbose_name_plural = 'Products'
